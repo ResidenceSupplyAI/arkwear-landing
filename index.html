@@ -83,12 +83,28 @@
 
     /* ── HERO ── */
     .hero {
-      height: 100vh;
+      min-height: 70vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0 32px 80px;
+      padding: 0 32px 60px;
       position: relative;
+      background-image: url('images/shoot-tire-display.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,12,12,0.95) 0%, rgba(12,12,12,0.6) 40%, rgba(12,12,12,0.3) 100%);
+      z-index: 0;
+    }
+    
+    .hero > * {
+      position: relative;
+      z-index: 1;
     }
     
     .hero::before {
@@ -100,18 +116,7 @@
       height: 500px;
       background: radial-gradient(circle, rgba(139,37,0,0.12) 0%, transparent 70%);
       filter: blur(80px);
-    }
-    
-    .hero::after {
-      content: '///';
-      position: absolute;
-      top: 40%;
-      right: 8%;
-      font-family: 'Special Elite', cursive;
-      font-size: 15rem;
-      color: rgba(255,255,255,0.015);
-      transform: rotate(-12deg);
-      user-select: none;
+      z-index: 0;
     }
     
     .hero-tag {
@@ -295,18 +300,7 @@
     }
     
     .product-img img.alt {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      z-index: 1;
-    }
-    
-    .product-card:hover .product-img img.alt {
-      opacity: 1;
-    }
-    
-    .product-card:hover .product-img img.main {
-      opacity: 0;
+      display: none;
     }
     
     .product-img::after {
@@ -617,12 +611,7 @@
     </div>
   </section>
 
-  <!-- VIBES GRID -->
-  <section class="vibes">
-    <div class="vibes-grid">
-      <div class="vibe-block"><span>The Shoot</span></div>
-    </div>
-  </section>
+  <!-- VIBES GRID removed - image moved to hero -->
 
   <!-- SIGNUP -->
   <section class="signup">
