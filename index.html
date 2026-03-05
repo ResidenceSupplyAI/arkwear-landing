@@ -507,6 +507,20 @@
     
     .footer-links { display: flex; gap: 24px; }
 
+    /* ── CYCLE TEXT ── */
+    .cycle-text {
+      display: inline-block;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .cycle-text.fade-out {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .cycle-text.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes glitch-in {
       0% { opacity: 0; transform: translateY(10px) skewX(-2deg); filter: blur(4px); }
@@ -602,7 +616,7 @@
   <section class="story" id="story">
     <div class="story-left">
       <div class="label">The Origin</div>
-      <h2>Built for the <br>people who <span class="dim">never sit still.</span></h2>
+      <h2>Built for the <br>people who <span class="dim cycle-text">never sit still.</span></h2>
     </div>
     <div class="story-right">
       <p>We didn't plan a clothing line. We just kept wearing what matched the energy — late-night cruises down Collins, early pickups at the warehouse, the hoodie you throw on when the AC hits after a Miami afternoon.</p>
@@ -631,6 +645,34 @@
       <a href="#">X</a>
     </div>
   </footer>
+
+  <script>
+    const phrases = [
+      'never sit still.',
+      'fueled by culture.',
+      'never back down.',
+      'go against the grain.',
+      'move different.',
+      'chase the vision.',
+      'built for the bold.',
+      'own the night.'
+    ];
+    
+    const cycleEl = document.querySelector('.cycle-text');
+    let index = 0;
+    
+    setInterval(() => {
+      cycleEl.classList.add('fade-out');
+      cycleEl.classList.remove('fade-in');
+      
+      setTimeout(() => {
+        index = (index + 1) % phrases.length;
+        cycleEl.textContent = phrases[index];
+        cycleEl.classList.remove('fade-out');
+        cycleEl.classList.add('fade-in');
+      }, 500);
+    }, 3000);
+  </script>
 
 </body>
 </html>
