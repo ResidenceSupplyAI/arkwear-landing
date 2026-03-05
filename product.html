@@ -410,13 +410,7 @@
     </div>
   </section>
 
-  <!-- LIFESTYLE BREAK 1 — hero shot -->
-  <div class="lifestyle-break lifestyle-single reveal" id="lifestyle1">
-    <img src="" alt="Lifestyle" id="lifestyleImg1">
-    <div class="overlay-text"><span>Drop 001 — The Shoot</span></div>
-  </div>
-
-  <!-- LIFESTYLE BREAK 2 — feature (girl/McLaren) full width -->
+  <!-- LIFESTYLE BREAK — feature (girl/McLaren) full width -->
   <div class="lifestyle-break lifestyle-single reveal" id="lifestyleFeature" style="display:none;">
     <img src="" alt="Lifestyle" id="lifestyleImgFeature">
   </div>
@@ -517,9 +511,6 @@
     });
 
     // Lifestyle images (editorial breaks)
-    document.getElementById('lifestyleImg1').src = product.lifestyle.hero;
-    
-    // Feature image (full width, above the duo)
     if (product.lifestyle.feature) {
       const featureSection = document.getElementById('lifestyleFeature');
       featureSection.style.display = '';
