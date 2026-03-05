@@ -586,11 +586,11 @@
         sizes: ['OS'],
         images: ['images/img3-nobg.png', 'images/img1-nobg.png', 'images/img2-nobg.png'],
         editorial: {
-          hero: ['images/editorial-cap-extra.jpg', 'images/editorial-cap-extra2.jpg'],
+          hero: ['images/editorial-cap-left.jpg', 'images/editorial-cap-extra2.jpg'],
           split: 'images/lifestyle-1134.jpg',
           title: 'On the <br>hood.',
           quote: 'No two are the same.',
-          desc: 'Graffiti print. Brass hardware. Worn in, not bought new. If you know, you know.'
+          desc: 'Graffiti print. Brass hardware. Worn in, not bought new. If you know, you know.\n\nEvery ARK Graffiti Cap starts the same — washed cotton, brass buckle, clean embroidery. But the print is never repeated. Each one is its own piece.\n\nWe didn\'t design this in an office. It came together in the garage, between pulls and tire rotations. The kind of thing you throw in the frunk and forget about until someone asks where you got it.\n\nDrop 001. Once they\'re gone, they\'re gone.'
         },
         details: [
           ['Material', 'Washed cotton'],
@@ -667,7 +667,7 @@
     document.getElementById('editorialSplitImg').src = product.editorial.split;
     document.getElementById('editorialTitle').innerHTML = product.editorial.title;
     document.getElementById('editorialQuote').textContent = product.editorial.quote;
-    document.getElementById('editorialDesc').textContent = product.editorial.desc;
+    document.getElementById('editorialDesc').innerHTML = product.editorial.desc.replace(/\n\n/g, '<br><br>');
 
     // Sizes
     let selectedSize = null;
