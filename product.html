@@ -241,28 +241,36 @@
     .lifestyle-break img {
       width: 100%;
       display: block;
-      object-fit: cover;
-    }
-
-    .lifestyle-single {
-      height: 70vh;
     }
 
     .lifestyle-single img {
-      height: 100%;
-      object-position: center 30%;
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .lifestyle-duo {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
-      height: 60vh;
     }
 
     .lifestyle-duo img {
-      height: 100%;
-      object-position: center;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .lifestyle-trio {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+
+    .lifestyle-trio img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .lifestyle-break .overlay-text {
@@ -343,9 +351,8 @@
       .gallery { position: static; }
       .product-page { padding: 100px 20px 0; }
       nav { padding: 24px 20px; }
-      .lifestyle-duo { grid-template-columns: 1fr; height: auto; }
-      .lifestyle-duo img { height: 50vh; }
-      .lifestyle-single { height: 50vh; }
+      .lifestyle-duo { grid-template-columns: 1fr; }
+      .lifestyle-trio { grid-template-columns: 1fr; }
       .pull-quote { padding: 60px 20px; }
     }
 
@@ -416,10 +423,7 @@
   </div>
 
   <!-- LIFESTYLE BREAK 2 -->
-  <div class="lifestyle-break lifestyle-duo reveal" id="lifestyle2">
-    <img src="" alt="Lifestyle" id="lifestyleImg2">
-    <img src="" alt="Lifestyle" id="lifestyleImg3">
-  </div>
+  <div class="lifestyle-break reveal" id="lifestyle2"></div>
 
   <footer>
     <span>© 2026 ARKwear — A brand by <a href="https://arkexotics.com">ARK Exotics</a></span>
@@ -464,7 +468,8 @@
         lifestyle: [
           'images/hoodie-product.jpg',
           'images/shoot-hoodie-front.jpg',
-          'images/shoot-model-lookback.jpg'
+          'images/shoot-model-lookback.jpg',
+          'images/lifestyle-jacket.jpg'
         ],
         quote: 'We didn\'t plan a clothing line. We just kept wearing what matched the energy.',
         details: [
@@ -509,8 +514,23 @@
 
     // Lifestyle images (editorial breaks)
     document.getElementById('lifestyleImg1').src = product.lifestyle[0];
-    document.getElementById('lifestyleImg2').src = product.lifestyle[1];
-    document.getElementById('lifestyleImg3').src = product.lifestyle[2];
+    
+    // Build second lifestyle grid dynamically
+    const lifestyle2 = document.getElementById('lifestyle2');
+    const remainingImages = product.lifestyle.slice(1);
+    if (remainingImages.length === 3) {
+      lifestyle2.classList.add('lifestyle-trio');
+    } else if (remainingImages.length === 2) {
+      lifestyle2.classList.add('lifestyle-duo');
+    } else {
+      lifestyle2.classList.add('lifestyle-single');
+    }
+    remainingImages.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Lifestyle';
+      lifestyle2.appendChild(img);
+    });
 
     // Sizes
     let selectedSize = null;
