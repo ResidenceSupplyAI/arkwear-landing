@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARKwear</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Special+Elite&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #0c0c0c;
+      --text: #e8e4df;
+      --text-dim: #6b6560;
+      --accent: #d4c5a0;
+      --accent-dim: rgba(212,197,160,0.15);
+      --red: #8b2500;
+      --card: #111110;
+      --border: rgba(255,255,255,0.06);
+    }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Space Grotesk', monospace, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* GRAIN */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(12,12,12,0.9);
+      backdrop-filter: blur(12px);
+    }
+    
+    .logo {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.6rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    
+    .nav-right {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    
+    .nav-right a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    
+    .nav-right a:hover { color: var(--text); }
+
+    /* BACK LINK */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      margin-bottom: 40px;
+    }
+    .back-link:hover { color: var(--text); }
+
+    /* PRODUCT PAGE LAYOUT */
+    .product-page {
+      padding: 120px 32px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* IMAGE GALLERY */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      position: sticky;
+      top: 100px;
+    }
+
+    .gallery-main {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 24px;
+      transition: opacity 0.4s;
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: 2px;
+    }
+
+    .gallery-thumb {
+      flex: 1;
+      aspect-ratio: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s;
+      padding: 8px;
+    }
+
+    .gallery-thumb:hover,
+    .gallery-thumb.active {
+      border-color: var(--accent);
+    }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* PRODUCT INFO */
+    .product-info {
+      padding-top: 20px;
+    }
+
+    .product-info .tag {
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 4px 12px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .product-info h1 {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .product-info .price {
+      font-family: 'Special Elite', cursive;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .product-info .desc {
+      color: var(--text-dim);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    /* SIZE SELECTOR */
+    .size-section {
+      margin-bottom: 32px;
+    }
+
+    .size-label {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .size-options {
+      display: flex;
+      gap: 8px;
+    }
+
+    .size-btn {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .size-btn:hover {
+      border-color: var(--text-dim);
+      color: var(--text);
+    }
+
+    .size-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* BUTTONS */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 36px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      letter-spacing: 6px;
+    }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 36px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--text-dim);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text);
+      letter-spacing: 6px;
+    }
+
+    /* DETAILS */
+    .details-section {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .detail-row .label {
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    .detail-row .value {
+      color: var(--text);
+      text-align: right;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+    
+    footer a {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 24px; }
+
+    /* NOTIFICATION */
+    .notification {
+      position: fixed;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--bg);
+      padding: 14px 32px;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      z-index: 200;
+      transition: bottom 0.4s ease;
+    }
+    .notification.show { bottom: 32px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .product-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .gallery { position: static; }
+      .product-page { padding: 100px 20px 60px; }
+      nav { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">ARKwear</a>
+    <div class="nav-right">
+      <a href="index.html#products">Shop</a>
+      <a href="index.html#story">About</a>
+    </div>
+  </nav>
+
+  <section class="product-page">
+    <a href="index.html#products" class="back-link">← Back to Drop 001</a>
+
+    <div class="product-layout">
+      <!-- Gallery -->
+      <div class="gallery">
+        <div class="gallery-main">
+          <img id="mainImg" src="" alt="">
+        </div>
+        <div class="gallery-thumbs" id="thumbs"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="product-info">
+        <span class="tag" id="productTag"></span>
+        <h1 id="productName"></h1>
+        <div class="price" id="productPrice"></div>
+        <p class="desc" id="productDesc"></p>
+
+        <div class="size-section">
+          <div class="size-label">Size</div>
+          <div class="size-options" id="sizeOptions"></div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-primary" id="addToCart">Add to Cart</button>
+          <button class="btn-primary" id="buyNow" style="background: var(--accent); color: var(--bg);">Buy Now</button>
+        </div>
+
+        <div class="details-section" id="details"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 ARKwear — A brand by <a href="https://arkexotics.com">ARK Exotics</a></span>
+    <div class="footer-links">
+      <a href="#">IG</a>
+      <a href="#">X</a>
+    </div>
+  </footer>
+
+  <div class="notification" id="notification">Added to cart</div>
+
+  <script>
+    const products = {
+      cap: {
+        name: 'Graffiti Dad Cap',
+        price: '$60',
+        tag: '1 OF 1',
+        desc: 'Hand-splattered. Every cap is one of one. Washed cotton with tonal abstract print, bold "ARK EXOTIC" embroidery, brass buckle closure. Distressed brim for that lived-in feel.',
+        sizes: ['OS'],
+        images: ['images/img3.webp', 'images/img1.webp', 'images/img2.webp'],
+        details: [
+          ['Material', 'Washed cotton'],
+          ['Closure', 'Brass buckle adjustable'],
+          ['Fit', 'One size fits all'],
+          ['Details', 'Hand-distressed brim, 3D embroidery'],
+          ['Origin', 'Miami, FL']
+        ]
+      },
+      hoodie: {
+        name: 'Memoir Hoodie',
+        price: '$150',
+        tag: 'HEAVY WEIGHT',
+        desc: '400 GSM French terry. Oversized cropped zip-up with double-layered hood, distressed patchwork sleeves, chrome hardware, and tonal "ARK EXOTIC" back embroidery. Built for late rides.',
+        sizes: ['S', 'M', 'L'],
+        images: ['images/img5.webp', 'images/img4.webp'],
+        details: [
+          ['Material', '400 GSM French terry'],
+          ['Fit', 'Oversized / Cropped'],
+          ['Closure', 'Full chrome zip'],
+          ['Details', 'Distressed patchwork sleeves, metal grommets'],
+          ['Hood', 'Double-layered'],
+          ['Origin', 'Miami, FL']
+        ]
+      }
+    };
+
+    // Get product from URL param
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('item') || 'cap';
+    const product = products[productId] || products.cap;
+
+    // Populate page
+    document.title = `${product.name} — ARKwear`;
+    document.getElementById('productName').textContent = product.name;
+    document.getElementById('productPrice').textContent = product.price;
+    document.getElementById('productTag').textContent = product.tag;
+    document.getElementById('productDesc').textContent = product.desc;
+
+    // Images
+    const mainImg = document.getElementById('mainImg');
+    mainImg.src = product.images[0];
+    mainImg.alt = product.name;
+
+    const thumbsContainer = document.getElementById('thumbs');
+    product.images.forEach((src, i) => {
+      const thumb = document.createElement('div');
+      thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+      thumb.innerHTML = `<img src="${src}" alt="${product.name}">`;
+      thumb.addEventListener('click', () => {
+        mainImg.src = src;
+        document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+      thumbsContainer.appendChild(thumb);
+    });
+
+    // Sizes
+    let selectedSize = null;
+    const sizeContainer = document.getElementById('sizeOptions');
+    product.sizes.forEach((size, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'size-btn' + (product.sizes.length === 1 ? ' active' : '');
+      btn.textContent = size;
+      if (product.sizes.length === 1) selectedSize = size;
+      btn.addEventListener('click', () => {
+        selectedSize = size;
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+      sizeContainer.appendChild(btn);
+    });
+
+    // Details
+    const detailsContainer = document.getElementById('details');
+    product.details.forEach(([label, value]) => {
+      detailsContainer.innerHTML += `<div class="detail-row"><span class="label">${label}</span><span class="value">${value}</span></div>`;
+    });
+
+    // Cart / Buy actions
+    const notification = document.getElementById('notification');
+    function showNotification(msg) {
+      notification.textContent = msg;
+      notification.classList.add('show');
+      setTimeout(() => notification.classList.remove('show'), 2500);
+    }
+
+    document.getElementById('addToCart').addEventListener('click', () => {
+      if (!selectedSize) { showNotification('Please select a size'); return; }
+      showNotification(`${product.name} (${selectedSize}) added to cart`);
+    });
+
+    document.getElementById('buyNow').addEventListener('click', () => {
+      if (!selectedSize) { showNotification('Please select a size'); return; }
+      // Redirect to Shopify store when ready
+      showNotification('Redirecting to checkout...');
+      // window.location.href = 'https://rent-ark-exotics.myshopify.com/...';
+    });
+  </script>
+
+</body>
+</html>

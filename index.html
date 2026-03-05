@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARKwear</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Special+Elite&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #0c0c0c;
+      --text: #e8e4df;
+      --text-dim: #6b6560;
+      --accent: #d4c5a0;
+      --accent-dim: rgba(212,197,160,0.15);
+      --red: #8b2500;
+      --card: #111110;
+      --border: rgba(255,255,255,0.06);
+    }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Space Grotesk', monospace, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      cursor: crosshair;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: difference;
+    }
+    
+    .logo {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.6rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    
+    .nav-right {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    
+    .nav-right a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    
+    .nav-right a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 32px 80px;
+      position: relative;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(139,37,0,0.12) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+    
+    .hero::after {
+      content: '///';
+      position: absolute;
+      top: 40%;
+      right: 8%;
+      font-family: 'Special Elite', cursive;
+      font-size: 15rem;
+      color: rgba(255,255,255,0.015);
+      transform: rotate(-12deg);
+      user-select: none;
+    }
+    
+    .hero-tag {
+      font-size: 0.65rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: glitch-in 0.8s 0.5s forwards;
+    }
+    
+    .hero h1 {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 400;
+      line-height: 0.9;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: glitch-in 0.8s 0.7s forwards;
+    }
+    
+    .hero h1 .stroke {
+      -webkit-text-stroke: 1.5px var(--text);
+      color: transparent;
+    }
+    
+    .hero h1 .accent {
+      color: var(--accent);
+      font-style: normal;
+    }
+    
+    .hero-desc {
+      max-width: 420px;
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: glitch-in 0.8s 0.9s forwards;
+    }
+    
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 36px;
+      border: 1px solid var(--text-dim);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      transition: all 0.4s;
+      opacity: 0;
+      animation: glitch-in 0.8s 1.1s forwards;
+    }
+    
+    .hero-cta:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      letter-spacing: 6px;
+    }
+    
+    .hero-cta .arrow { transition: transform 0.3s; }
+    .hero-cta:hover .arrow { transform: translateX(4px); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      padding: 0 32px;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    
+    .marquee {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+      padding: 20px 0;
+    }
+    
+    .marquee span {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 0 40px;
+    }
+
+    /* ── PRODUCTS ── */
+    .products {
+      padding: 100px 32px;
+    }
+    
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+    
+    .products-header h2 {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1;
+    }
+    
+    .products-header .count {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 3px;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.4s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    
+    .product-card:hover { border-color: rgba(255,255,255,0.12); }
+    
+    .product-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .product-img.cap {
+      background: 
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(139,37,0,0.04) 35px, rgba(139,37,0,0.04) 36px),
+        linear-gradient(180deg, #141413 0%, #1a1917 100%);
+    }
+    
+    .product-img.hoodie {
+      background:
+        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(212,197,160,0.03) 35px, rgba(212,197,160,0.03) 36px),
+        linear-gradient(180deg, #121211 0%, #181715 100%);
+    }
+    
+    .product-img .tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 4px 10px;
+    }
+    
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 32px;
+      transition: opacity 0.5s ease;
+    }
+    
+    .product-img img.alt {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+    
+    .product-card:hover .product-img img.alt {
+      opacity: 1;
+    }
+    
+    .product-card:hover .product-img img.main {
+      opacity: 0;
+    }
+    
+    .product-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(to top, var(--card), transparent);
+    }
+    
+    .product-body {
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .product-body h3 {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    
+    .product-body .sub {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      max-width: 240px;
+      line-height: 1.5;
+    }
+    
+    .product-price {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.4rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    /* ── STORY ── */
+    .story {
+      padding: 140px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    
+    .story-left .label {
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+    }
+    
+    .story-left h2 {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+    
+    .story-left h2 .dim { color: var(--text-dim); }
+    
+    .story-right p {
+      color: var(--text-dim);
+      line-height: 1.9;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    
+    .story-right .sig {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-top: 32px;
+    }
+
+    /* ── GRID ── */
+    .vibes {
+      padding: 0 32px 120px;
+    }
+    
+    .vibes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    
+    .vibe-block {
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s;
+    }
+    
+    .vibe-block:hover { filter: brightness(1.3); }
+    
+    .vibe-block {
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .vibe-block:nth-child(1) {
+      background-image: url('images/img1.webp');
+    }
+    .vibe-block:nth-child(2) {
+      background-image: url('images/img4.webp');
+    }
+    .vibe-block:nth-child(3) {
+      background-image: url('images/img2.webp');
+    }
+    .vibe-block:nth-child(4) {
+      background-image: url('images/img5.webp');
+    }
+    
+    .vibe-block::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      transition: background 0.4s;
+    }
+    
+    .vibe-block:hover::after {
+      background: rgba(0,0,0,0.25);
+    }
+    
+    .vibe-block span {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      z-index: 1;
+    }
+
+    /* ── SIGNUP ── */
+    .signup {
+      padding: 100px 32px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    
+    .signup h3 {
+      font-family: 'Special Elite', cursive;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    
+    .signup p {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-bottom: 36px;
+    }
+    
+    .signup-form {
+      display: inline-flex;
+      border-bottom: 1px solid var(--text-dim);
+      max-width: 400px;
+      width: 100%;
+    }
+    
+    .signup-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 14px 0;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    
+    .signup-form input::placeholder { color: #444; }
+    
+    .signup-form button {
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 14px 4px;
+      transition: letter-spacing 0.3s;
+    }
+    
+    .signup-form button:hover { letter-spacing: 2px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+    
+    footer a {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    footer a:hover { color: var(--accent); }
+    
+    .footer-links { display: flex; gap: 24px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes glitch-in {
+      0% { opacity: 0; transform: translateY(10px) skewX(-2deg); filter: blur(4px); }
+      60% { opacity: 1; transform: translateY(-2px) skewX(0.5deg); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0) skewX(0); }
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 3.5rem; }
+      .product-grid { grid-template-columns: 1fr; }
+      .story { grid-template-columns: 1fr; gap: 40px; padding: 80px 20px; }
+      .vibes-grid { grid-template-columns: repeat(2, 1fr); }
+      nav, .hero, .products, .vibes, .signup, footer { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">ARKwear</a>
+    <div class="nav-right">
+      <a href="#products">Shop</a>
+      <a href="#story">About</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Miami — Limited Drop 001</div>
+    <h1>Born from<br><span class="stroke">the</span> <span class="accent">drive.</span></h1>
+    <p class="hero-desc">Streetwear for people who move at night. From the people behind the exotics.</p>
+    <a href="#products" class="hero-cta">
+      Enter the drop <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="divider">
+    <div class="marquee">
+      <span>ARKwear /// Miami FL /// Drop 001 /// Limited Run /// No Restock ///</span>
+      <span>ARKwear /// Miami FL /// Drop 001 /// Limited Run /// No Restock ///</span>
+      <span>ARKwear /// Miami FL /// Drop 001 /// Limited Run /// No Restock ///</span>
+      <span>ARKwear /// Miami FL /// Drop 001 /// Limited Run /// No Restock ///</span>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="products-header">
+      <h2>Drop 001</h2>
+      <span class="count">02 Pieces</span>
+    </div>
+    <div class="product-grid">
+      <a href="product.html?item=cap" class="product-card">
+        <div class="product-img cap">
+          <span class="tag">1 of 1</span>
+          <img class="main" src="images/img3.webp" alt="Graffiti Dad Cap - Front View">
+          <img class="alt" src="images/img1.webp" alt="Graffiti Dad Cap - Side View">
+        </div>
+        <div class="product-body">
+          <div>
+            <h3>Graffiti Dad Cap</h3>
+            <div class="sub">Hand-splattered. Every cap is one of one. Brass buckle. Washed cotton.</div>
+          </div>
+          <div class="product-price">$60</div>
+        </div>
+      </a>
+      <a href="product.html?item=hoodie" class="product-card">
+        <div class="product-img hoodie">
+          <span class="tag">Heavy Weight</span>
+          <img class="main" src="images/img5.webp" alt="Memoir Hoodie - Front View">
+          <img class="alt" src="images/img4.webp" alt="Memoir Hoodie - Back View">
+        </div>
+        <div class="product-body">
+          <div>
+            <h3>Memoir Hoodie</h3>
+            <div class="sub">400 GSM French terry. Oversized. Double-layered hood. Built for late rides.</div>
+          </div>
+          <div class="product-price">$150</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story" id="story">
+    <div class="story-left">
+      <div class="label">The Origin</div>
+      <h2>Started in the <br>passenger seat. <span class="dim">Built for the people who never sit still.</span></h2>
+    </div>
+    <div class="story-right">
+      <p>We didn't plan a clothing line. We just kept wearing what matched the energy — late-night cruises down Collins, early pickups at the warehouse, the hoodie you throw on when the AC hits after a Miami afternoon.</p>
+      <p>Then people started asking where we got it. So we made more.</p>
+      <div class="sig">— ARK Exotics, Miami FL</div>
+    </div>
+  </section>
+
+  <!-- VIBES GRID -->
+  <section class="vibes">
+    <div class="vibes-grid">
+      <div class="vibe-block"><span>Wynwood</span></div>
+      <div class="vibe-block"><span>The Fleet</span></div>
+      <div class="vibe-block"><span>After Hours</span></div>
+      <div class="vibe-block"><span>The Drive</span></div>
+    </div>
+  </section>
+
+  <!-- SIGNUP -->
+  <section class="signup">
+    <h3>Join the archive</h3>
+    <p>First access. No spam. Just drops.</p>
+    <div class="signup-form">
+      <input type="email" placeholder="your@email.com">
+      <button>Enter →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 ARKwear — A brand by <a href="https://arkexotics.com">ARK Exotics</a></span>
+    <div class="footer-links">
+      <a href="#">IG</a>
+      <a href="#">X</a>
+    </div>
+  </footer>
+
+</body>
+</html>
