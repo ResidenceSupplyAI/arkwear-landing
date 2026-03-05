@@ -286,11 +286,23 @@
       overflow: hidden;
     }
 
-    .editorial-hero img {
+    .editorial-hero-images {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      background: var(--bg);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .editorial-hero-images.dual {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .editorial-hero-images img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     .editorial-hero .editorial-overlay {
@@ -376,6 +388,7 @@
 
     @media (max-width: 768px) {
       .editorial-hero { height: 60vh; }
+      .editorial-hero-images.dual { grid-template-columns: 1fr; }
       .editorial-hero .editorial-overlay { padding: 32px; }
       .editorial-split { grid-template-columns: 1fr; }
       .editorial-split .editorial-text { padding: 40px 20px; border-left: none; border-top: 1px solid var(--border); }
@@ -533,7 +546,9 @@
   <!-- EDITORIAL -->
   <div class="editorial" id="editorialSection">
     <div class="editorial-hero reveal" id="editorialHero">
-      <img src="" alt="" id="editorialHeroImg">
+      <div class="editorial-hero-images" id="editorialHeroImages">
+        <!-- populated by JS -->
+      </div>
       <div class="editorial-overlay">
         <h2 id="editorialTitle"></h2>
         <p>Drop 001 — Limited Run</p>
@@ -571,8 +586,8 @@
         sizes: ['OS'],
         images: ['images/img3-nobg.png', 'images/img1-nobg.png', 'images/img2-nobg.png'],
         editorial: {
-          hero: 'images/editorial-cap-extra.jpg',
-          split: 'images/editorial-cap-extra2.jpg',
+          hero: ['images/editorial-cap-extra.jpg', 'images/editorial-cap-extra2.jpg'],
+          split: 'images/lifestyle-1134.jpg',
           title: 'On the <br>hood.',
           quote: 'No two are the same.',
           desc: 'Graffiti print. Brass hardware. Worn in, not bought new. If you know, you know.'
@@ -639,8 +654,16 @@
       thumbsContainer.appendChild(thumb);
     });
 
-    // Editorial section
-    document.getElementById('editorialHeroImg').src = product.editorial.hero;
+    // Editorial section - hero images
+    const heroContainer = document.getElementById('editorialHeroImages');
+    const heroImages = Array.isArray(product.editorial.hero) ? product.editorial.hero : [product.editorial.hero];
+    if (heroImages.length > 1) heroContainer.classList.add('dual');
+    heroImages.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = product.name;
+      heroContainer.appendChild(img);
+    });
     document.getElementById('editorialSplitImg').src = product.editorial.split;
     document.getElementById('editorialTitle').innerHTML = product.editorial.title;
     document.getElementById('editorialQuote').textContent = product.editorial.quote;
