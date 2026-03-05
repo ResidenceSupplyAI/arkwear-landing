@@ -264,13 +264,121 @@
     .lifestyle-stacked {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0;
     }
 
     .lifestyle-stacked img {
       width: 100%;
       height: auto;
       display: block;
+    }
+
+    /* EDITORIAL SECTION */
+    .editorial {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-top: 80px;
+    }
+
+    .editorial-hero {
+      position: relative;
+      height: 85vh;
+      overflow: hidden;
+    }
+
+    .editorial-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .editorial-hero .editorial-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,12,12,0.9) 0%, rgba(12,12,12,0.2) 40%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px;
+    }
+
+    .editorial-hero .editorial-overlay h2 {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .editorial-hero .editorial-overlay h2 .dim {
+      color: var(--text-dim);
+    }
+
+    .editorial-hero .editorial-overlay p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .editorial-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+
+    .editorial-split .editorial-img {
+      overflow: hidden;
+    }
+
+    .editorial-split .editorial-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .editorial-split .editorial-img:hover img {
+      transform: scale(1.03);
+    }
+
+    .editorial-split .editorial-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+    }
+
+    .editorial-split .editorial-text .label {
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .editorial-split .editorial-text h3 {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .editorial-split .editorial-text p {
+      color: var(--text-dim);
+      line-height: 1.8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .editorial-hero { height: 60vh; }
+      .editorial-hero .editorial-overlay { padding: 32px; }
+      .editorial-split { grid-template-columns: 1fr; }
+      .editorial-split .editorial-text { padding: 40px 20px; border-left: none; border-top: 1px solid var(--border); }
     }
 
     .lifestyle-trio {
@@ -422,19 +530,26 @@
     </div>
   </section>
 
-  <!-- LIFESTYLE BREAK — feature (girl/McLaren) full width -->
-  <div class="lifestyle-break lifestyle-single reveal" id="lifestyleFeature" style="display:none;">
-    <img src="" alt="Lifestyle" id="lifestyleImgFeature">
+  <!-- EDITORIAL -->
+  <div class="editorial" id="editorialSection">
+    <div class="editorial-hero reveal" id="editorialHero">
+      <img src="" alt="" id="editorialHeroImg">
+      <div class="editorial-overlay">
+        <h2 id="editorialTitle"></h2>
+        <p>Drop 001 — Limited Run</p>
+      </div>
+    </div>
+    <div class="editorial-split reveal" id="editorialSplit">
+      <div class="editorial-img">
+        <img src="" alt="" id="editorialSplitImg">
+      </div>
+      <div class="editorial-text">
+        <div class="label">The Story</div>
+        <h3 id="editorialQuote"></h3>
+        <p id="editorialDesc"></p>
+      </div>
+    </div>
   </div>
-
-  <!-- PULL QUOTE -->
-  <div class="pull-quote reveal">
-    <blockquote id="pullQuote"></blockquote>
-    <div class="sig">— ARK Exotics, Miami FL</div>
-  </div>
-
-  <!-- LIFESTYLE BREAK 3 — stacked -->
-  <div class="lifestyle-break lifestyle-stacked reveal" id="lifestyle3"></div>
 
   <footer>
     <span>© 2026 ARKwear — A brand by <a href="https://arkexotics.com">ARK Exotics</a></span>
@@ -455,12 +570,13 @@
         desc: 'The first drop. One of one energy. Graffiti-print washed cotton with "ARK EXOTIC" embroidered front, "ARK" embroidered back, and brass buckle adjustable closure.',
         sizes: ['OS'],
         images: ['images/img3.webp', 'images/img1.webp', 'images/img2.webp'],
-        lifestyle: {
+        editorial: {
           hero: 'images/lifestyle-1162.jpg',
-          feature: null,
-          grid: ['images/lifestyle-1134.jpg', 'images/lifestyle-cap2.jpg']
+          split: 'images/lifestyle-1134.jpg',
+          title: 'Not just <br>a cap.',
+          quote: 'Every cap tells a different story.',
+          desc: 'Shot on location at the ARK Exotics warehouse. No studio. No script. Just the energy.'
         },
-        quote: 'Every cap tells a different story.',
         details: [
           ['Material', 'Washed cotton'],
           ['Closure', 'Brass buckle adjustable'],
@@ -476,12 +592,13 @@
         desc: '400 GSM French terry. Oversized cropped zip-up with double-layered hood, distressed patchwork sleeves, chrome hardware, and tonal "ARK EXOTIC" back embroidery. Built for late rides.',
         sizes: ['S', 'M', 'L'],
         images: ['images/img5.webp', 'images/img4.webp'],
-        lifestyle: {
-          hero: 'images/lifestyle-hoodie-hero.jpg',
-          feature: 'images/lifestyle-jacket.jpg',
-          grid: ['images/shoot-hoodie-front.jpg', 'images/shoot-model-lookback.jpg']
+        editorial: {
+          hero: 'images/lifestyle-jacket.jpg',
+          split: 'images/shoot-model-lookback.jpg',
+          title: 'Built for <br>late rides.',
+          quote: 'Built for the people who never sit still.',
+          desc: 'Shot at the garage. 400 GSM heavyweight. Chrome hardware. Distressed patches hand-applied. Every hoodie is a piece of the story.'
         },
-        quote: 'Built for the people who never sit still.',
         details: [
           ['Material', '400 GSM French terry'],
           ['Fit', 'Oversized / Cropped'],
@@ -522,21 +639,12 @@
       thumbsContainer.appendChild(thumb);
     });
 
-    // Lifestyle images (editorial breaks)
-    if (product.lifestyle.feature) {
-      const featureSection = document.getElementById('lifestyleFeature');
-      featureSection.style.display = '';
-      document.getElementById('lifestyleImgFeature').src = product.lifestyle.feature;
-    }
-    
-    // Duo grid
-    const lifestyle3 = document.getElementById('lifestyle3');
-    product.lifestyle.grid.forEach(src => {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = 'Lifestyle';
-      lifestyle3.appendChild(img);
-    });
+    // Editorial section
+    document.getElementById('editorialHeroImg').src = product.editorial.hero;
+    document.getElementById('editorialSplitImg').src = product.editorial.split;
+    document.getElementById('editorialTitle').innerHTML = product.editorial.title;
+    document.getElementById('editorialQuote').textContent = product.editorial.quote;
+    document.getElementById('editorialDesc').textContent = product.editorial.desc;
 
     // Sizes
     let selectedSize = null;
