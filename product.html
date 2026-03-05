@@ -15,7 +15,6 @@
       --text-dim: #6b6560;
       --accent: #d4c5a0;
       --accent-dim: rgba(212,197,160,0.15);
-      --red: #8b2500;
       --card: #111110;
       --border: rgba(255,255,255,0.06);
     }
@@ -29,7 +28,6 @@
       overflow-x: hidden;
     }
 
-    /* GRAIN */
     body::after {
       content: '';
       position: fixed;
@@ -61,15 +59,9 @@
       font-size: 1.6rem;
       color: var(--text);
       text-decoration: none;
-      letter-spacing: -0.5px;
     }
     
-    .nav-right {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-    
+    .nav-right { display: flex; gap: 32px; align-items: center; }
     .nav-right a {
       color: var(--text-dim);
       text-decoration: none;
@@ -78,10 +70,9 @@
       text-transform: uppercase;
       transition: color 0.3s;
     }
-    
     .nav-right a:hover { color: var(--text); }
 
-    /* BACK LINK */
+    /* BACK */
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -96,12 +87,8 @@
     }
     .back-link:hover { color: var(--text); }
 
-    /* PRODUCT PAGE LAYOUT */
-    .product-page {
-      padding: 120px 32px 80px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+    /* PRODUCT SECTION */
+    .product-page { padding: 120px 32px 0; max-width: 1400px; margin: 0 auto; }
 
     .product-layout {
       display: grid;
@@ -110,14 +97,8 @@
       align-items: start;
     }
 
-    /* IMAGE GALLERY */
-    .gallery {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      position: sticky;
-      top: 100px;
-    }
+    /* GALLERY */
+    .gallery { display: flex; flex-direction: column; gap: 2px; position: sticky; top: 100px; }
 
     .gallery-main {
       width: 100%;
@@ -138,10 +119,7 @@
       transition: opacity 0.4s;
     }
 
-    .gallery-thumbs {
-      display: flex;
-      gap: 2px;
-    }
+    .gallery-thumbs { display: flex; gap: 2px; }
 
     .gallery-thumb {
       flex: 1;
@@ -153,22 +131,11 @@
       transition: border-color 0.3s;
       padding: 8px;
     }
-
-    .gallery-thumb:hover,
-    .gallery-thumb.active {
-      border-color: var(--accent);
-    }
-
-    .gallery-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+    .gallery-thumb:hover, .gallery-thumb.active { border-color: var(--accent); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: contain; }
 
     /* PRODUCT INFO */
-    .product-info {
-      padding-top: 20px;
-    }
+    .product-info { padding-top: 20px; }
 
     .product-info .tag {
       font-size: 0.6rem;
@@ -203,11 +170,8 @@
       max-width: 480px;
     }
 
-    /* SIZE SELECTOR */
-    .size-section {
-      margin-bottom: 32px;
-    }
-
+    /* SIZE */
+    .size-section { margin-bottom: 32px; }
     .size-label {
       font-size: 0.7rem;
       letter-spacing: 3px;
@@ -215,18 +179,11 @@
       color: var(--text-dim);
       margin-bottom: 12px;
     }
-
-    .size-options {
-      display: flex;
-      gap: 8px;
-    }
+    .size-options { display: flex; gap: 8px; }
 
     .size-btn {
-      width: 56px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 56px; height: 56px;
+      display: flex; align-items: center; justify-content: center;
       background: transparent;
       border: 1px solid var(--border);
       color: var(--text-dim);
@@ -234,144 +191,173 @@
       font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.3s;
-      letter-spacing: 1px;
     }
-
-    .size-btn:hover {
-      border-color: var(--text-dim);
-      color: var(--text);
-    }
-
-    .size-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-dim);
-    }
+    .size-btn:hover { border-color: var(--text-dim); color: var(--text); }
+    .size-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
     /* BUTTONS */
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 40px;
-    }
+    .btn-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
 
     .btn-primary {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
       padding: 18px 36px;
-      background: var(--text);
-      color: var(--bg);
-      border: none;
+      background: var(--text); color: var(--bg); border: none;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.4s;
-      text-decoration: none;
+      font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
+      cursor: pointer; transition: all 0.4s; text-decoration: none;
     }
-
-    .btn-primary:hover {
-      background: var(--accent);
-      letter-spacing: 6px;
-    }
+    .btn-primary:hover { background: var(--accent); letter-spacing: 6px; }
 
     .btn-secondary {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
       padding: 18px 36px;
-      background: transparent;
-      color: var(--text);
+      background: transparent; color: var(--text);
       border: 1px solid var(--text-dim);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.4s;
-      text-decoration: none;
+      font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
+      cursor: pointer; transition: all 0.4s; text-decoration: none;
     }
-
-    .btn-secondary:hover {
-      border-color: var(--text);
-      letter-spacing: 6px;
-    }
+    .btn-secondary:hover { border-color: var(--text); letter-spacing: 6px; }
 
     /* DETAILS */
-    .details-section {
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-    }
-
+    .details-section { border-top: 1px solid var(--border); padding-top: 32px; }
     .detail-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
+      display: flex; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem;
+    }
+    .detail-row .label { color: var(--text-dim); }
+    .detail-row .value { color: var(--text); text-align: right; }
+
+    /* ── LIFESTYLE BREAKS ── */
+    .lifestyle-break {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      position: relative;
+      overflow: hidden;
+      margin-top: 80px;
+      margin-bottom: 0;
     }
 
-    .detail-row .label {
+    .lifestyle-break img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .lifestyle-single {
+      height: 70vh;
+    }
+
+    .lifestyle-single img {
+      height: 100%;
+      object-position: center 30%;
+    }
+
+    .lifestyle-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      height: 60vh;
+    }
+
+    .lifestyle-duo img {
+      height: 100%;
+      object-position: center;
+    }
+
+    .lifestyle-break .overlay-text {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      z-index: 2;
+    }
+
+    .lifestyle-break .overlay-text span {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
       color: var(--text-dim);
-      letter-spacing: 1px;
+      background: rgba(12,12,12,0.7);
+      padding: 6px 14px;
+      backdrop-filter: blur(8px);
     }
 
-    .detail-row .value {
+    .lifestyle-break::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30%;
+      background: linear-gradient(to top, rgba(12,12,12,0.6), transparent);
+      pointer-events: none;
+    }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      padding: 80px 32px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .pull-quote blockquote {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
       color: var(--text);
-      text-align: right;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    .pull-quote .sig {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-top: 24px;
     }
 
     /* FOOTER */
     footer {
       padding: 40px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       border-top: 1px solid var(--border);
-      font-size: 0.7rem;
-      color: var(--text-dim);
+      font-size: 0.7rem; color: var(--text-dim);
     }
-    
-    footer a {
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    
+    footer a { color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
     footer a:hover { color: var(--accent); }
     .footer-links { display: flex; gap: 24px; }
 
     /* NOTIFICATION */
     .notification {
-      position: fixed;
-      bottom: -80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: var(--bg);
-      padding: 14px 32px;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      z-index: 200;
-      transition: bottom 0.4s ease;
+      position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: var(--bg);
+      padding: 14px 32px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+      z-index: 200; transition: bottom 0.4s ease;
     }
     .notification.show { bottom: 32px; }
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      .product-layout {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
+      .product-layout { grid-template-columns: 1fr; gap: 32px; }
       .gallery { position: static; }
-      .product-page { padding: 100px 20px 60px; }
+      .product-page { padding: 100px 20px 0; }
       nav { padding: 24px 20px; }
+      .lifestyle-duo { grid-template-columns: 1fr; height: auto; }
+      .lifestyle-duo img { height: 50vh; }
+      .lifestyle-single { height: 50vh; }
+      .pull-quote { padding: 60px 20px; }
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -389,7 +375,6 @@
     <a href="index.html#products" class="back-link">← Back to Drop 001</a>
 
     <div class="product-layout">
-      <!-- Gallery -->
       <div class="gallery">
         <div class="gallery-main">
           <img id="mainImg" src="" alt="">
@@ -397,7 +382,6 @@
         <div class="gallery-thumbs" id="thumbs"></div>
       </div>
 
-      <!-- Info -->
       <div class="product-info">
         <span class="tag" id="productTag"></span>
         <h1 id="productName"></h1>
@@ -419,6 +403,24 @@
     </div>
   </section>
 
+  <!-- LIFESTYLE BREAK 1 -->
+  <div class="lifestyle-break lifestyle-single reveal" id="lifestyle1">
+    <img src="" alt="Lifestyle" id="lifestyleImg1">
+    <div class="overlay-text"><span>Drop 001 — The Shoot</span></div>
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pull-quote reveal">
+    <blockquote id="pullQuote"></blockquote>
+    <div class="sig">— ARK Exotics, Miami FL</div>
+  </div>
+
+  <!-- LIFESTYLE BREAK 2 -->
+  <div class="lifestyle-break lifestyle-duo reveal" id="lifestyle2">
+    <img src="" alt="Lifestyle" id="lifestyleImg2">
+    <img src="" alt="Lifestyle" id="lifestyleImg3">
+  </div>
+
   <footer>
     <span>© 2026 ARKwear — A brand by <a href="https://arkexotics.com">ARK Exotics</a></span>
     <div class="footer-links">
@@ -437,7 +439,13 @@
         tag: '1 OF 1',
         desc: 'Hand-splattered. Every cap is one of one. Washed cotton with tonal abstract print, bold "ARK EXOTIC" embroidery, brass buckle closure. Distressed brim for that lived-in feel.',
         sizes: ['OS'],
-        images: ['images/hat-product.jpg', 'images/img3.webp', 'images/img1.webp', 'images/img2.webp'],
+        images: ['images/img3.webp', 'images/img1.webp', 'images/img2.webp'],
+        lifestyle: [
+          'images/lifestyle-1162.jpg',
+          'images/lifestyle-1134.jpg',
+          'images/lifestyle-1164.jpg'
+        ],
+        quote: 'Started in the passenger seat. Every cap tells a different story.',
         details: [
           ['Material', 'Washed cotton'],
           ['Closure', 'Brass buckle adjustable'],
@@ -452,7 +460,13 @@
         tag: 'HEAVY WEIGHT',
         desc: '400 GSM French terry. Oversized cropped zip-up with double-layered hood, distressed patchwork sleeves, chrome hardware, and tonal "ARK EXOTIC" back embroidery. Built for late rides.',
         sizes: ['S', 'M', 'L'],
-        images: ['images/hoodie-product.jpg', 'images/img5.webp', 'images/img4.webp', 'images/shoot-hoodie-front.jpg', 'images/shoot-hoodie-back.jpg', 'images/shoot-model-lookback.jpg'],
+        images: ['images/img5.webp', 'images/img4.webp'],
+        lifestyle: [
+          'images/hoodie-product.jpg',
+          'images/shoot-hoodie-front.jpg',
+          'images/shoot-model-lookback.jpg'
+        ],
+        quote: 'We didn\'t plan a clothing line. We just kept wearing what matched the energy.',
         details: [
           ['Material', '400 GSM French terry'],
           ['Fit', 'Oversized / Cropped'],
@@ -464,19 +478,18 @@
       }
     };
 
-    // Get product from URL param
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('item') || 'cap';
     const product = products[productId] || products.cap;
 
-    // Populate page
     document.title = `${product.name} — ARKwear`;
     document.getElementById('productName').textContent = product.name;
     document.getElementById('productPrice').textContent = product.price;
     document.getElementById('productTag').textContent = product.tag;
     document.getElementById('productDesc').textContent = product.desc;
+    document.getElementById('pullQuote').textContent = product.quote;
 
-    // Images
+    // Product images (gallery only)
     const mainImg = document.getElementById('mainImg');
     mainImg.src = product.images[0];
     mainImg.alt = product.name;
@@ -494,10 +507,15 @@
       thumbsContainer.appendChild(thumb);
     });
 
+    // Lifestyle images (editorial breaks)
+    document.getElementById('lifestyleImg1').src = product.lifestyle[0];
+    document.getElementById('lifestyleImg2').src = product.lifestyle[1];
+    document.getElementById('lifestyleImg3').src = product.lifestyle[2];
+
     // Sizes
     let selectedSize = null;
     const sizeContainer = document.getElementById('sizeOptions');
-    product.sizes.forEach((size, i) => {
+    product.sizes.forEach((size) => {
       const btn = document.createElement('button');
       btn.className = 'size-btn' + (product.sizes.length === 1 ? ' active' : '');
       btn.textContent = size;
@@ -516,7 +534,7 @@
       detailsContainer.innerHTML += `<div class="detail-row"><span class="label">${label}</span><span class="value">${value}</span></div>`;
     });
 
-    // Cart / Buy actions
+    // Cart / Buy
     const notification = document.getElementById('notification');
     function showNotification(msg) {
       notification.textContent = msg;
@@ -531,10 +549,19 @@
 
     document.getElementById('buyNow').addEventListener('click', () => {
       if (!selectedSize) { showNotification('Please select a size'); return; }
-      // Redirect to Shopify store when ready
       showNotification('Redirecting to checkout...');
-      // window.location.href = 'https://rent-ark-exotics.myshopify.com/...';
     });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
 
 </body>
